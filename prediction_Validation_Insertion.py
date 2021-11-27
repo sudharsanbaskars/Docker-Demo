@@ -9,7 +9,7 @@ class pred_validation:
         self.raw_data = Prediction_Data_validation(path)
         self.dataTransform = dataTransformPredict()
         self.dBOperation = dBOperation()
-        self.file_object = open("Prediction_Logs/Prediction_Log.txt", 'a+')
+        self.file_object = open("Prediction_Logs/Prediction_Log.txt", 'w+')
         self.log_writer = logger.App_Logger()
 
     def prediction_validation(self):

@@ -9,7 +9,7 @@ from Prediction_Raw_Data_Validation.predictionDataValidation import Prediction_D
 class prediction:
 
     def __init__(self,path):
-        self.file_object = open("Prediction_Logs/Prediction_Log.txt", 'a+')
+        self.file_object = open("Prediction_Logs/Prediction_Log.txt", 'w+')
         self.log_writer = logger.App_Logger()
         if path is not None:
             self.pred_data_val = Prediction_Data_validation(path)

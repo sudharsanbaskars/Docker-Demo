@@ -9,7 +9,7 @@ class train_validation:
         self.raw_data = Raw_Data_validation(path)
         self.dataTransform = dataTransform()
         self.dBOperation = dBOperation()
-        self.file_object = open("Training_Logs/Training_Main_Log.txt", 'a+')
+        self.file_object = open("Training_Logs/Training_Main_Log.txt", 'w+')
         self.log_writer = logger.App_Logger()
 
     def train_validation(self):
