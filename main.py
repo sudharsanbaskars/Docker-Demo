@@ -8,7 +8,6 @@ from trainingModel import trainModel
 from training_Validation_Insertion import train_validation
 import flask_monitoringdashboard as dashboard
 from predictFromModel import prediction
-import json
 
 os.putenv('LANG', 'en_US.UTF-8')
 os.putenv('LC_ALL', 'en_US.UTF-8')
@@ -27,39 +26,24 @@ def home():
 @cross_origin()
 def predictRouteClient():
     try:
-        if request.json is not None:
-            path = request.json['filepath']
+        abs_path = str(request.form['filepath'])
 
-            pred_val = pred_validation(path) #object initialization
+        pred_val = pred_validation(abs_path) #object initialization
 
-            pred_val.prediction_validation() #calling the prediction_validation function
+        pred_val.prediction_validation() #calling the prediction_validation function
 
-            pred = prediction(path) #object initialization
+        pred = prediction(abs_path) #object initialization
 
-            # predicting for dataset present in database
-            path,json_predictions = pred.predictionFromModel()
-            return Response("Prediction File created at !!!"  +str(path) +'and few of the predictions are '+str(json.loads(json_predictions) ))
-        elif request.form is not None:
-            path = request.form['filepath']
-
-            pred_val = pred_validation(path) #object initialization
-
-            pred_val.prediction_validation() #calling the prediction_validation function
-
-            pred = prediction(path) #object initialization
-
-            # predicting for dataset present in database
-            path,json_predictions = pred.predictionFromModel()
-            return Response("Prediction File created at !!!"  +str(path) +'and few of the predictions are '+str(json.loads(json_predictions) ))
+        # predicting for dataset present in database
+        codn = pred.predictionFromModel()
+        final_path = abs_path+"/Prediction_OutputFile/Predictions.csv"
+        if codn is False:
+            return Response("Please mention a valid path which contains valid files")
         else:
-            print('Nothing Matched')
-    except ValueError:
-        return Response("Error Occurred! %s" %ValueError)
-    except KeyError:
-        return Response("Error Occurred! %s" %KeyError)
+            return Response("Your Prediction File created at: "  +str(final_path))
+
     except Exception as e:
         return Response("Error Occurred! %s" %e)
-
 
 
 @app.route("/train", methods=['GET','POST'])
@@ -70,7 +54,7 @@ def trainRouteClient():
         # if request.json['folderPath'] is not None:
         if folder_path is not None:
             path = folder_path
-            #path = request.json['folderPath']
+            path = request.json['folderPath']
 
             train_valObj = train_validation(path) #object initialization
 
@@ -80,9 +64,7 @@ def trainRouteClient():
             trainModelObj = trainModel() #object initialization
             trainModelObj.trainingModel() #training the model for the files in the table
 
-
     except ValueError:
-
         return Response("Error Occurred! %s" % ValueError)
 
     except KeyError:
@@ -94,6 +76,7 @@ def trainRouteClient():
         return Response("Error Occurred! %s" % e)
     return Response("Training successful!!")
 
+
 port = int(os.getenv("PORT",5000))
 if __name__ == "__main__":
     host = '0.0.0.0'
@@ -101,3 +84,4 @@ if __name__ == "__main__":
     httpd = simple_server.make_server(host, port, app)
     # print("Serving on %s %d" % (host, port))
     httpd.serve_forever()
+

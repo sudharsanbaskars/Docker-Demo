@@ -9,3 +9,4 @@ best_model_finder
 data_ingestion
 data_preprocessing
 file_operations
+tests

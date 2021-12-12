@@ -24,6 +24,8 @@ data_preprocessing/clustering.py
 data_preprocessing/preprocessing.py
 file_operations/__init__.py
 file_operations/file_methods.py
+tests/__init__.py
+tests/test_script.py
 wafer_fault_detection.egg-info/PKG-INFO
 wafer_fault_detection.egg-info/SOURCES.txt
 wafer_fault_detection.egg-info/dependency_links.txt

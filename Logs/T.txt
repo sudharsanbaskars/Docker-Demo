@@ -1,0 +1,20 @@
+2021-12-05	17:32:16	Entered the is_null_present method of the Preprocessor class
+2021-12-05	17:32:16	Finding missing values is a success.Data written to the null values file. Exited the is_null_present method of the Preprocessor class
+2021-12-05	17:32:16	Entered the impute_missing_values method of the Preprocessor class
+2021-12-05	17:32:16	Imputing missing values Successful. Exited the impute_missing_values method of the Preprocessor class
+2021-12-05	17:32:35	Entered the is_null_present method of the Preprocessor class
+2021-12-05	17:32:35	Finding missing values is a success.Data written to the null values file. Exited the is_null_present method of the Preprocessor class
+2021-12-05	17:32:35	Entered the impute_missing_values method of the Preprocessor class
+2021-12-05	17:32:35	Imputing missing values Successful. Exited the impute_missing_values method of the Preprocessor class
+2021-12-05	17:32:45	Entered the is_null_present method of the Preprocessor class
+2021-12-05	17:32:45	Exception occured in is_null_present method of the Preprocessor class. Exception message:  'NoneType' object has no attribute 'isna'
+2021-12-05	17:32:45	Finding missing values failed. Exited the is_null_present method of the Preprocessor class
+2021-12-05	17:33:18	Entered the is_null_present method of the Preprocessor class
+2021-12-05	17:33:18	Exception occured in is_null_present method of the Preprocessor class. Exception message:  'NoneType' object has no attribute 'isna'
+2021-12-05	17:33:18	Finding missing values failed. Exited the is_null_present method of the Preprocessor class
+2021-12-05	17:34:26	Entered the is_null_present method of the Preprocessor class
+2021-12-05	17:34:26	Exception occured in is_null_present method of the Preprocessor class. Exception message:  'NoneType' object has no attribute 'isna'
+2021-12-05	17:34:26	Finding missing values failed. Exited the is_null_present method of the Preprocessor class
+2021-12-05	17:35:07	Entered the is_null_present method of the Preprocessor class
+2021-12-05	17:35:07	Exception occured in is_null_present method of the Preprocessor class. Exception message:  'NoneType' object has no attribute 'isna'
+2021-12-05	17:35:07	Finding missing values failed. Exited the is_null_present method of the Preprocessor class

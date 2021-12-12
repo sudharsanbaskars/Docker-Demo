@@ -1,36 +1,58 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics  import roc_auc_score,accuracy_score
 
 class Model_Finder:
     """
                 This class shall  be used to find the model with best accuracy and AUC score.
-                Written By: iNeuron Intelligence
                 Version: 1.0
                 Revisions: None
 
-                """
+            """
 
     def __init__(self,file_object,logger_object):
         self.file_object = file_object
         self.logger_object = logger_object
         self.clf = RandomForestClassifier()
+        self.lor = LogisticRegression()
+        self.knn = KNeighborsClassifier()
         self.xgb = XGBClassifier(objective='binary:logistic')
+
+    def get_best_params_for_logistic_regression(self, train_x, train_y):
+
+        self.logger_object.log(self.file_object,
+                               'Entered the get_best_params_for_logistic_regression method of the Model_Finder class')
+        self.train_x = train_x
+        self.train_y = train_y
+
+        try:
+            # creating a LogisticRegression model
+            self.lor = LogisticRegression()
+            # training the LogisticRegression model
+            self.lor.fit(self.train_x, self.train_y)
+            self.logger_object.log(self.file_object,
+                                   '. Exited the get_best_params_for_logistic_regression method of the Model_Finder class')
+            return self.lor
+        except Exception as e:
+            self.logger_object.log(self.file_object,'Exception occured in get_best_params_for_logistic_regression method of the Model_Finder class. Exception message:  ' + str(e))
+            self.logger_object.log(self.file_object,'Logistic Regression failed. Exited the get_best_params_for_logistic_regression method of the Model_Finder class')
+            raise Exception()
 
     def get_best_params_for_random_forest(self,train_x,train_y):
         """
-                                Method Name: get_best_params_for_random_forest
-                                Description: get the parameters for Random Forest Algorithm which give the best accuracy.
-                                             Use Hyper Parameter Tuning.
-                                Output: The model with the best parameters
-                                On Failure: Raise Exception
+                Method Name: get_best_params_for_random_forest
+                Description: get the parameters for Random Forest Algorithm which give the best accuracy.
+                             Use Hyper Parameter Tuning.
+                Output: The model with the best parameters
+                On Failure: Raise Exception
 
-                                Written By: iNeuron Intelligence
-                                Version: 1.0
-                                Revisions: None
+                Version: 1.0
+                Revisions: None
 
-                        """
+        """
         self.logger_object.log(self.file_object, 'Entered the get_best_params_for_random_forest method of the Model_Finder class')
         try:
             # initializing with different combination of parameters
@@ -65,20 +87,41 @@ class Model_Finder:
                                    'Random Forest Parameter tuning  failed. Exited the get_best_params_for_random_forest method of the Model_Finder class')
             raise Exception()
 
+    def get_best_params_for_knn(self,train_x,train_y):
+
+
+        self.logger_object.log(self.file_object,'Entered the get_best_params_for_knn method of the Model_Finder class')
+        self.train_x=train_x
+        self.train_y=train_y
+        try:
+
+            # creating the KNeighborsClassifier model
+            self.knn = KNeighborsClassifier()
+
+            # training the KNeighborsClassifier model
+            self.knn.fit(self.train_x, self.train_y)
+            self.logger_object.log(self.file_object, '. Entered the get_best_params_for_knn method of the Model_Finder class')
+
+
+            return self.knn
+
+        except Exception as e:
+            self.logger_object.log(self.file_object,'Exception occured in get_best_params_for_knn method of the Model_Finder class. Exception message:  ' + str(e))
+            self.logger_object.log(self.file_object,'KNN ALGORITHM failed. Exited the get_best_params_for_knn method of the Model_Finder class')
+            raise Exception()
+
     def get_best_params_for_xgboost(self,train_x,train_y):
 
         """
-                                        Method Name: get_best_params_for_xgboost
-                                        Description: get the parameters for XGBoost Algorithm which give the best accuracy.
-                                                     Use Hyper Parameter Tuning.
-                                        Output: The model with the best parameters
-                                        On Failure: Raise Exception
+                Method Name: get_best_params_for_xgboost
+                Description: get the parameters for XGBoost Algorithm which give the best accuracy.
+                             Use Hyper Parameter Tuning.
+                Output: The model with the best parameters
+                On Failure: Raise Exception
 
-                                        Written By: iNeuron Intelligence
-                                        Version: 1.0
-                                        Revisions: None
-
-                                """
+                Version: 1.0
+                Revisions: None
+        """
         self.logger_object.log(self.file_object,
                                'Entered the get_best_params_for_xgboost method of the Model_Finder class')
         try:
@@ -108,6 +151,7 @@ class Model_Finder:
                                    'XGBoost best params: ' + str(
                                        self.grid.best_params_) + '. Exited the get_best_params_for_xgboost method of the Model_Finder class')
             return self.xgb
+
         except Exception as e:
             self.logger_object.log(self.file_object,
                                    'Exception occured in get_best_params_for_xgboost method of the Model_Finder class. Exception message:  ' + str(
@@ -119,16 +163,14 @@ class Model_Finder:
 
     def get_best_model(self,train_x,train_y,test_x,test_y):
         """
-                                                Method Name: get_best_model
-                                                Description: Find out the Model which has the best AUC score.
-                                                Output: The best model name and the model object
-                                                On Failure: Raise Exception
+            Method Name: get_best_model
+            Description: Find out the Model which has the best AUC score.
+            Output: The best model name and the model object
+            On Failure: Raise Exception
+            Version: 1.0
+            Revisions: None
 
-                                                Written By: iNeuron Intelligence
-                                                Version: 1.0
-                                                Revisions: None
-
-                                        """
+        """
         self.logger_object.log(self.file_object,
                                'Entered the get_best_model method of the Model_Finder class')
         # create best model for XGBoost

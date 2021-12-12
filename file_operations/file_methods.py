@@ -5,14 +5,12 @@ import shutil
 
 class File_Operation:
     """
-                This class shall be used to save the model after training
-                and load the saved model for prediction.
+        This class shall be used to save the model after training
+        and load the saved model for prediction.
+        Version: 1.0
+        Revisions: None
 
-                Written By: iNeuron Intelligence
-                Version: 1.0
-                Revisions: None
-
-                """
+    """
     def __init__(self,file_object,logger_object):
         self.file_object = file_object
         self.logger_object = logger_object
@@ -24,11 +22,9 @@ class File_Operation:
             Description: Save the model file to directory
             Outcome: File gets saved
             On Failure: Raise Exception
-
-            Written By: iNeuron Intelligence
             Version: 1.0
             Revisions: None
-"""
+    """
         self.logger_object.log(self.file_object, 'Entered the save_model method of the File_Operation class')
         try:
             path = os.path.join(self.model_directory,filename) #create seperate directory for each cluster
@@ -52,14 +48,13 @@ class File_Operation:
 
     def load_model(self,filename):
         """
-                    Method Name: load_model
-                    Description: load the model file to memory
-                    Output: The Model file loaded in memory
-                    On Failure: Raise Exception
+            Method Name: load_model
+            Description: load the model file to memory
+            Output: The Model file loaded in memory
+            On Failure: Raise Exception
 
-                    Written By: iNeuron Intelligence
-                    Version: 1.0
-                    Revisions: None
+            Version: 1.0
+            Revisions: None
         """
         self.logger_object.log(self.file_object, 'Entered the load_model method of the File_Operation class')
         try:
@@ -78,15 +73,13 @@ class File_Operation:
 
     def find_correct_model_file(self,cluster_number):
         """
-                            Method Name: find_correct_model_file
-                            Description: Select the correct model based on cluster number
-                            Output: The Model file
-                            On Failure: Raise Exception
-
-                            Written By: iNeuron Intelligence
-                            Version: 1.0
-                            Revisions: None
-                """
+            Method Name: find_correct_model_file
+            Description: Select the correct model based on cluster number
+            Output: The Model file
+            On Failure: Raise Exception
+            Version: 1.0
+            Revisions: None
+        """
         self.logger_object.log(self.file_object, 'Entered the find_correct_model_file method of the File_Operation class')
         try:
             self.cluster_number= cluster_number
@@ -110,3 +103,4 @@ class File_Operation:
             self.logger_object.log(self.file_object,
                                    'Exited the find_correct_model_file method of the Model_Finder class with Failure')
             raise Exception()
+

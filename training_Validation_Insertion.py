@@ -9,7 +9,7 @@ class train_validation:
         self.raw_data = Raw_Data_validation(path)
         self.dataTransform = dataTransform()
         self.dBOperation = dBOperation()
-        self.file_object = open("Training_Logs/Training_Main_Log.txt", 'w+')
+        self.file_object = "Training_Main_Log.txt"
         self.log_writer = logger.App_Logger()
 
     def train_validation(self):
@@ -21,10 +21,9 @@ class train_validation:
             regex = self.raw_data.manualRegexCreation()
             # validating filename of prediction files
             self.raw_data.validationFileNameRaw(regex, LengthOfDateStampInFile, LengthOfTimeStampInFile)
-            # validating column length in the file
-            self.raw_data.validateColumnLength(noofcolumns)
             # validating if any column has all values missing
             self.raw_data.validateMissingValuesInWholeColumn()
+            # validating column length in the file
             self.log_writer.log(self.file_object, "Raw Data Validation Complete!!")
 
             self.log_writer.log(self.file_object, "Starting Data Transforamtion!!")
@@ -54,7 +53,6 @@ class train_validation:
             self.log_writer.log(self.file_object, "Extracting csv file from table")
             # export data in table to csvfile
             self.dBOperation.selectingDatafromtableintocsv('Training')
-            self.file_object.close()
 
         except Exception as e:
             raise e

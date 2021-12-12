@@ -9,13 +9,12 @@ class pred_validation:
         self.raw_data = Prediction_Data_validation(path)
         self.dataTransform = dataTransformPredict()
         self.dBOperation = dBOperation()
-        self.file_object = open("Prediction_Logs/Prediction_Log.txt", 'w+')
+        self.file_object = "Prediction_Log.txt"
         self.log_writer = logger.App_Logger()
 
     def prediction_validation(self):
 
         try:
-
             self.log_writer.log(self.file_object,'Start of Validation on files for prediction!!')
             #extracting values from prediction schema
             LengthOfDateStampInFile,LengthOfTimeStampInFile,column_names,noofcolumns = self.raw_data.valuesFromSchema()

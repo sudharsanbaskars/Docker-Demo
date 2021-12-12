@@ -5,13 +5,11 @@ from file_operations import file_methods
 
 class KMeansClustering:
     """
-            This class shall  be used to divide the data into clusters before training.
+    This class shall  be used to divide the data into clusters before training.
+    Version: 1.0
+    Revisions: None
 
-            Written By: iNeuron Intelligence
-            Version: 1.0
-            Revisions: None
-
-            """
+    """
 
     def __init__(self, file_object, logger_object):
         self.file_object = file_object
@@ -19,16 +17,14 @@ class KMeansClustering:
 
     def elbow_plot(self,data):
         """
-                        Method Name: elbow_plot
-                        Description: This method saves the plot to decide the optimum number of clusters to the file.
-                        Output: A picture saved to the directory
-                        On Failure: Raise Exception
+                Method Name: elbow_plot
+                Description: This method saves the plot to decide the optimum number of clusters to the file.
+                Output: A picture saved to the directory
+                On Failure: Raise Exception
+                Version: 1.0
+                Revisions: None
 
-                        Written By: iNeuron Intelligence
-                        Version: 1.0
-                        Revisions: None
-
-                """
+        """
         self.logger_object.log(self.file_object, 'Entered the elbow_plot method of the KMeansClustering class')
         wcss=[] # initializing an empty list
         try:
@@ -54,16 +50,13 @@ class KMeansClustering:
 
     def create_clusters(self,data,number_of_clusters):
         """
-                                Method Name: create_clusters
-                                Description: Create a new dataframe consisting of the cluster information.
-                                Output: A datframe with cluster column
-                                On Failure: Raise Exception
-
-                                Written By: iNeuron Intelligence
-                                Version: 1.0
-                                Revisions: None
-
-                        """
+                Method Name: create_clusters
+                Description: Create a new dataframe consisting of the cluster information.
+                Output: A datframe with cluster column
+                On Failure: Raise Exception
+                Version: 1.0
+                Revisions: None
+        """
         self.logger_object.log(self.file_object, 'Entered the create_clusters method of the KMeansClustering class')
         self.data=data
         try:
@@ -78,6 +71,7 @@ class KMeansClustering:
             self.data['Cluster']=self.y_kmeans  # create a new column in dataset for storing the cluster information
             self.logger_object.log(self.file_object, 'succesfully created '+str(self.kn.knee)+ 'clusters. Exited the create_clusters method of the KMeansClustering class')
             return self.data
+
         except Exception as e:
             self.logger_object.log(self.file_object,'Exception occured in create_clusters method of the KMeansClustering class. Exception message:  ' + str(e))
             self.logger_object.log(self.file_object,'Fitting the data to clusters failed. Exited the create_clusters method of the KMeansClustering class')

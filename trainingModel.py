@@ -9,6 +9,8 @@ Revisions: None
 
 
 # Doing the necessary imports
+import json
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from data_ingestion import data_loader
 from data_preprocessing import preprocessing
@@ -24,7 +26,7 @@ class trainModel:
 
     def __init__(self):
         self.log_writer = logger.App_Logger()
-        self.file_object = open("Training_Logs/ModelTrainingLog.txt", 'w+')
+        self.file_object = "ModelTrainingLog.txt"
 
     def trainingModel(self):
         # Logging the start of Training
@@ -44,20 +46,17 @@ class trainModel:
             X,Y=preprocessor.separate_label_feature(data,label_column_name='Output')
 
             # check if missing values are present in the dataset
-            is_null_present=preprocessor.is_null_present(X)
+            is_null_present = preprocessor.is_null_present(X)
 
             # if missing values are there, replace them appropriately.
             if(is_null_present):
                 X=preprocessor.impute_missing_values(X) # missing value imputation
 
-            # check further which columns do not contribute to predictions
-            # if the standard deviation for a column is zero, it means that the column has constant values
-            # and they are giving the same output both for good and bad sensors
-            # prepare the list of such columns to drop
-            cols_to_drop=preprocessor.get_columns_with_zero_std_deviation(X)
-
-            # drop the columns obtained above
-            X=preprocessor.remove_columns(X,cols_to_drop)
+            # Data Standardization
+            X = preprocessor.standardization(X)
+            # print(X.shape)
+            # PCA
+            #n_components, X = preprocessor.implement_pca(X)
 
             """ Applying the clustering approach"""
 
@@ -69,6 +68,7 @@ class trainModel:
 
             #create a new column in the dataset consisting of the corresponding cluster assignments.
             X['Labels']=Y
+            #self.log_writer()
 
             # getting the unique clusters from our dataset
             list_of_clusters=X['Cluster'].unique()
@@ -84,7 +84,7 @@ class trainModel:
 
                 # splitting the data into training and test set for each cluster one by one
                 x_train, x_test, y_train, y_test = train_test_split(cluster_features, cluster_label, test_size=1 / 3, random_state=355)
-
+                print(x_train.shape)
                 model_finder=tuner.Model_Finder(self.file_object,self.log_writer) # object initialization
 
                 #getting the best model for each of the clusters
@@ -96,10 +96,8 @@ class trainModel:
 
             # logging the successful Training
             self.log_writer.log(self.file_object, 'Successful End of Training')
-            self.file_object.close()
 
-        except Exception:
+        except Exception as e:
             # logging the unsuccessful Training
-            self.log_writer.log(self.file_object, 'Unsuccessful End of Training')
-            self.file_object.close()
+            self.log_writer.log(self.file_object, 'Unsuccessful End of Training: '+str(e))
             raise Exception
